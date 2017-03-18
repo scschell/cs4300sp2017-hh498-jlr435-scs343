@@ -24,7 +24,7 @@ NOTE: If you are using Windows, please read the `If you are using Windows` secti
 $ git clone https://github.com/CornellNLP/CS4300.git
 $ cd CS4300
 ```
-- Sign in to your own github account and create a new repository for this project. The name of the repo's need to start with `cs4300sp2016-`.
+- Sign in to your own github account and create a new repository for this project. The name of the repo's need to start with `cs4300sp2017-`.
 - Add `cristiandnm` (Prof. DNM's account name) as a member with admin rights on the git repo. 
 - Push the framework to your own github repository.
 ```sh
@@ -80,7 +80,7 @@ $ python manage.py runserver
 Performing system checks...
 
 System check identified no issues (0 silenced).
-March 13, 2016 - 03:50:58
+March 13, 2017 - 03:50:58
 Django version 1.9.4, using settings 'mysite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
