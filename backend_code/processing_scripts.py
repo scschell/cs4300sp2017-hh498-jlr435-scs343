@@ -140,9 +140,73 @@ def build_vectors(data):
     book_by_vocab = book_by_vocab.toarray()
     return index_to_vocab, book_by_vocab
 
+""" Finds cosine similarity between two books using their transcripts.
+    Input:
+        b1: The title of the first book we are looking for.
+        b2: The title of the second book we are looking for.
+    
+    Ouput:
+        similarity: Cosine similarity of the two book transcripts.
+"""
+def get_sim(b1, b2):
+    index1 = book_title_to_index[b1]
+    index2 = book_title_to_index[b2]
+    #compute and return dot product; vectors are already normalized
+    return np.dot(book_by_vocab[index1], book_by_vocab[index2])
+
+"""Builds book similarity vector
+    Input: book by vocab matrix
+    Ouput: book similarity vector"""
+def build_similarities(book_by_vocab, data):
+    book_sims = np.empty([len(data), len(data)], dtype = np.float32)
+    #For each pair of items
+    for i in range(0, len(book_by_vocab)):
+        for j in range(0, len(book_by_vocab)):
+            if i not in book_index_to_title or j not in book_index_to_title:
+                book_sims[i][j] = -1
+            #If it is the diagonal, set to 0
+            elif i == j:
+                book_sims[i][j] = 0
+            #Otherwise, find the similarity
+            else :
+                book_sims[i][j] = get_sim(book_index_to_title[i], book_index_to_title[j])
+    return book_sims
+
+"""Finds top and bottom x of books similar to a given book title.
+    Input: book title
+    Ouput: printed ordered list of top entries, ordered list of bottom entries"""
+def find_top_and_bottom_sims(title, x):
+    #Find index for Lucky Pehr
+    index = book_title_to_index[title]
+    #Find x most and least similar books
+    highest_indices = (-book_sims[index]).argsort()[:x]
+    
+    print("MOST SIMILAR:")
+    i = 1
+    for ind in highest_indices:
+        print(str(i) + ". ", round(book_sims[index][ind], 2), book_index_to_title[ind])
+        i = i + 1
+    
+    #Find x least similar books
+    lowest_ind = (book_sims[index]).argsort()
+    lowest_ind = [item for item in lowest_ind if book_sims[index][item] >= 0]
+    to_del = np.argwhere(lowest_ind==index)
+    if index in lowest_ind:
+        lowest_ind.remove(index)
+    lowest_indices = np.delete(lowest_ind, to_del)[:x]
+    
+    print("\nLEAST SIMILAR:")
+    i = 0
+    for ind in lowest_indices:
+        print(str(i) + ". ", round(book_sims[index][ind], 2), book_index_to_title[ind])
+        i = i + 1
+
 def main():
-	data = build_dicts('data')
+        global data, book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title, index_to_vocab, book_by_vocab, book_sims
+	data = build_dicts('../data')
 	book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title = build_supp_dicts(data)
 	index_to_vocab, book_by_vocab = build_vectors(data)
-
+	book_sims = build_similarities(book_by_vocab, data)
+	
 main()
+
