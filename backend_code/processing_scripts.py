@@ -144,6 +144,5 @@ def main():
 	data = build_dicts('data')
 	book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title = build_supp_dicts(data)
 	index_to_vocab, book_by_vocab = build_vectors(data)
-        print(book_by_vocab)
 
 main()
