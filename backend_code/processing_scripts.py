@@ -9,9 +9,6 @@ import numpy as np
 import json
 import re
 import os
-import cPickle as pickle
-
-global data, book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title, index_to_vocab, book_by_vocab, book_sims
 
 """Creates a key for each book in the file directory, given a file path.
     Input: file path as string
@@ -147,20 +144,25 @@ def build_vectors(data):
     Input:
         b1: The title of the first book we are looking for.
         b2: The title of the second book we are looking for.
-    
+        book_title_to_index : dict of book titles mapped to their indices
+        book_by_vocab : matrix of books and their vocabularies
     Ouput:
         similarity: Cosine similarity of the two book transcripts.
 """
-def get_sim(b1, b2):
+def get_sim(b1, b2, book_title_to_index, book_by_vocab):
     index1 = book_title_to_index[b1]
     index2 = book_title_to_index[b2]
     #compute and return dot product; vectors are already normalized
     return np.dot(book_by_vocab[index1], book_by_vocab[index2])
 
 """Builds book similarity vector
-    Input: book by vocab matrix
+    Input:
+        book_by_vocab: matrix of books and their vocbaularies
+        data: all data pertaining to books
+        book_index_to_title: dict mapping book indices to titles
+        book_title_to_index: dict mapping book titles to indices
     Ouput: book similarity vector"""
-def build_similarities(book_by_vocab, data):
+def build_similarities(book_by_vocab, data, book_index_to_title, book_title_to_index):
     book_sims = np.empty([len(data), len(data)], dtype = np.float32)
     #For each pair of items
     for i in range(0, len(book_by_vocab)):
@@ -172,11 +174,13 @@ def build_similarities(book_by_vocab, data):
                 book_sims[i][j] = 0
             #Otherwise, find the similarity
             else :
-                book_sims[i][j] = get_sim(book_index_to_title[i], book_index_to_title[j])
+                book_sims[i][j] = get_sim(book_index_to_title[i], book_index_to_title[j], book_title_to_index, book_by_vocab)
     return book_sims
 
 """Finds top and bottom x of books similar to a given book title.
-    Input: book title
+    Input:
+        title: book title
+        x: number of highest/lowest books to display
     Ouput: printed ordered list of top entries, ordered list of bottom entries"""
 def find_top_and_bottom_sims(title, x):
     #Find index for Lucky Pehr
@@ -205,22 +209,31 @@ def find_top_and_bottom_sims(title, x):
         i = i + 1
 
 """ Creates a JSON object storing the cosine similaritites of the books. """
-def create_json(book_sims):
-    with open('book_sims.json', 'w') as f:
-        json.dump(book_sims.tolist(), f, ensure_ascii=False)
+def create_json_matrix(item, name):
+    with open(name, 'w') as f:
+        json.dump(item.tolist(), f, ensure_ascii=False)
 
-def load_json():
-    global book_sims
-    with open("book_sims.json", "rb") as f:
-        book_sim = json.load(f)
-        book_sims = np.array(book_sim)
+def load_json_matrix(filepath):
+    with open(filepath, "rb") as f:
+        i = json.load(f)
+        item = np.array(i)
+    return item
 
+def create_json(item, name):
+    with open(name, 'w') as fp:
+        json.dump(item, fp, ensure_ascii=False)
+
+def load_json(filepath):
+    with open(filepath, "r") as fp:
+        item = json.load(fp)
+    return item
 
 def main():
-        global data, book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title, index_to_vocab, book_by_vocab, book_sims
 	data = build_dicts('../data')
 	book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title = build_supp_dicts(data)
 	index_to_vocab, book_by_vocab = build_vectors(data)
-	book_sims = build_similarities(book_by_vocab, data)
-        create_json(book_sims)	
+	book_sims = build_similarities(book_by_vocab, data, book_index_to_title, book_title_to_index)
+        create_json_matrix(book_sims, "book_sims.json")
+        book_sims = load_json_matrix("book_sims.json")
+
 main()
