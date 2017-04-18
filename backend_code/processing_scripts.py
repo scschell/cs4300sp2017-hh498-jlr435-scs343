@@ -9,6 +9,9 @@ import numpy as np
 import json
 import re
 import os
+import cPickle as pickle
+
+global data, book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title, index_to_vocab, book_by_vocab, book_sims
 
 """Creates a key for each book in the file directory, given a file path.
     Input: file path as string
@@ -201,12 +204,23 @@ def find_top_and_bottom_sims(title, x):
         print(str(i) + ". ", round(book_sims[index][ind], 2), book_index_to_title[ind])
         i = i + 1
 
+""" Creates a JSON object storing the cosine similaritites of the books. """
+def create_json(book_sims):
+    with open('book_sims.json', 'w') as f:
+        json.dump(book_sims.tolist(), f, ensure_ascii=False)
+
+def load_json():
+    global book_sims
+    with open("book_sims.json", "rb") as f:
+        book_sim = json.load(f)
+        book_sims = np.array(book_sim)
+
+
 def main():
         global data, book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title, index_to_vocab, book_by_vocab, book_sims
 	data = build_dicts('../data')
 	book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title = build_supp_dicts(data)
 	index_to_vocab, book_by_vocab = build_vectors(data)
 	book_sims = build_similarities(book_by_vocab, data)
-	
+        create_json(book_sims)	
 main()
-
