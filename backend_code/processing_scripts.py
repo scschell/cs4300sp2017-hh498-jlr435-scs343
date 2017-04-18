@@ -234,6 +234,6 @@ def main():
 	index_to_vocab, book_by_vocab = build_vectors(data)
 	book_sims = build_similarities(book_by_vocab, data, book_index_to_title, book_title_to_index)
         create_json_matrix(book_sims, "book_sims.json")
-        book_sims = load_json_matrix("book_sims.json")
+        #book_sims = load_json_matrix("book_sims.json") to load the book
 
 main()
