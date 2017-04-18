@@ -9,6 +9,7 @@ import numpy as np
 import json
 import re
 import os
+import cPickle as pickle
 
 """Creates a key for each book in the file directory, given a file path.
     Input: file path as string
@@ -219,13 +220,13 @@ def load_json_matrix(filepath):
         item = np.array(i)
     return item
 
-def create_json(item, name):
-    with open(name, 'w') as fp:
-        json.dump(item, fp, ensure_ascii=False)
+def create_pickle(item, name):
+    with open(name, 'wb') as f:
+        pickle.dump(item, f)
 
-def load_json(filepath):
-    with open(filepath, "r") as fp:
-        item = json.load(fp)
+def load_pickle(filepath):
+    with open(filepath,'rb') as f:
+        item = pickle.load(f)
     return item
 
 def main():
@@ -234,6 +235,16 @@ def main():
 	index_to_vocab, book_by_vocab = build_vectors(data)
 	book_sims = build_similarities(book_by_vocab, data, book_index_to_title, book_title_to_index)
         create_json_matrix(book_sims, "book_sims.json")
-        #book_sims = load_json_matrix("book_sims.json") to load the book
+        create_json_matrix(book_by_vocab, "book_by_vocab.json")
+        create_pickle(book_index_to_title, "book_index_to_title.pickle")
+        create_pickle(book_title_to_index, "book_title_to_index.pickle")
+        create_pickle(book_id_to_title, "book_id_to_title.pickle")
+        create_pickle(book_title_to_id, "book_title_to_id.pickle")
+        create_pickle(book_id_to_index, "book_id_to_index.pickle")
+        create_pickle(index_to_vocab, "index_to_vocab.pickle")
+        create_pickle(data, "data.pickle")
+
+        #book_index_to_title = load_pickle("book_index_to_title.pickle")
+        print(book_index_to_title)
 
 main()
