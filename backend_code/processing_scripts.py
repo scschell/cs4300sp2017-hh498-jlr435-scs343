@@ -244,4 +244,5 @@ def main():
         create_pickle(index_to_vocab, "index_to_vocab.pickle")
         create_pickle(data, "data.pickle")
 
+
 main()
