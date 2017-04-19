@@ -5,5 +5,27 @@
     "fields": {
       "address": "jsons/kardashian-transcripts.json"
     }
+  },
+  {
+    "model": "project_template.Docs",
+    "pk": 2,
+    "fields": {
+      "address": "backend_code/book_sims.json"
+    }
+  },
+  {
+    "model": "project_template.Docs",
+    "pk": 3,
+    "fields": {
+      "address": "backend_code/book_title_to_index.pickle"
+    }
+  },
+
+  {
+    "model": "project_template.Docs",
+    "pk": 4,
+    "fields": {
+      "address": "backend_code/book_index_to_title.pickle"
+    }
   }
 ]
