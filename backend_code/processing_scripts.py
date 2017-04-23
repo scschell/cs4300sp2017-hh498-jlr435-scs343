@@ -230,7 +230,7 @@ def load_pickle(filepath):
     return item
 
 def main():
-	data = build_dicts('../data')
+	data = build_dicts('../newData')
 	book_id_to_index, book_title_to_id, book_id_to_title, book_title_to_index, book_index_to_title = build_supp_dicts(data)
 	index_to_vocab, book_by_vocab = build_vectors(data)
 	book_sims = build_similarities(book_by_vocab, data, book_index_to_title, book_title_to_index)
@@ -242,7 +242,7 @@ def main():
         create_pickle(book_title_to_id, "book_title_to_id.pickle")
         create_pickle(book_id_to_index, "book_id_to_index.pickle")
         create_pickle(index_to_vocab, "index_to_vocab.pickle")
-        create_pickle(data, "data.pickle")
+        #create_pickle(data, "data.pickle")
 
 
 main()
