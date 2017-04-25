@@ -11,8 +11,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index(request):
     output_list = ''
     output=''
+    ipt =''
     if request.GET.get('search'):
         search = request.GET.get('search')
+        ipt = search
         output_list = find_similar(search)
         paginator = Paginator(output_list, 10)
         page = request.GET.get('page')
@@ -25,4 +27,5 @@ def index(request):
     return render_to_response('project_template/index.html', 
                           {'output': output,
                            'magic_url': request.get_full_path(),
+                           'input': ipt
                            })

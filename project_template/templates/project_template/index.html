@@ -14,7 +14,7 @@
         
         <form class="form-inline global-search" method='GET'>
             <h1 style="font-size: 55px; font-family:Garamond; color: #4285F4">
-                CS 4300
+                BookLife
             </h1>
             
             <br><br>
@@ -26,7 +26,10 @@
         </form>
         
         <div class="form-inline global-search">
-            <h4>Output</h4><br>
+            <h4>Recommendations for: </h4>
+            {% if input %}
+                {{input}}
+            {% endif %}<br>
             {% for line in output %}
                 {{line}}<br>
             {% endfor %}

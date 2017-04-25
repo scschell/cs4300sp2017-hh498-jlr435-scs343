@@ -27,7 +27,6 @@ def find_similar(q):
 	titles = []
 
 	for k, v in title_to_idx.items():
-		k = k.lower()
 		titles.append(k)
 		lower_tti[k] = v
 
