@@ -13,12 +13,12 @@ def create_pickle(item, name):
         pickle.dump(item, f)
 
 def main():
-	api_key = ''
-	secret  = ''
+	api_key = 'ZdhASvKYwV3oFbdGxHVLA'
+	secret  = '69QbHfonpppJBJ2oIavrsDzbAefWcGiBb0R5HrvXz8'
 	gc = client.GoodreadsClient(api_key, secret)
 	index = {}
 
-	for i in range(1000, 2000):
+	for i in range(2000, 4000):
 		try:
 			bk = gc.book(i)
 			print('On BookID: ' + str(i))
@@ -29,7 +29,7 @@ def main():
 		except:
 			continue
 
-	create_pickle(index, 'data2.pickle')
+	create_pickle(index, 'data3.pickle')
 
 main()
 

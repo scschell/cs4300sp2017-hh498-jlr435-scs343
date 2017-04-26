@@ -3,6 +3,16 @@
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
         <script src="https://d3js.org/d3.v4.min.js"></script>
+        <style>
+        body {
+            background-color: white;
+            background: url('project_template/templates/project_template/img/library.jpg');;
+        }
+        .btn {
+            background-color: #B31B1B;
+        }
+
+        </style>
     </head>
     
     <body>
@@ -13,7 +23,7 @@
         </div>
         
         <form class="form-inline global-search" method='GET'>
-            <h1 style="font-size: 55px; font-family:Garamond; color: #4285F4">
+            <h1 style="font-size: 55px; font-family:Garamond; color: #B31B1B">
                 BookLife
             </h1>
             
@@ -29,7 +39,7 @@
             <h4>Recommendations for: </h4>
             {% if input %}
                 {{input}}
-            {% endif %}<br>
+            {% endif %}<b>(closest match)</b><br>
             {% for line in output %}
                 {{line}}<br>
             {% endfor %}

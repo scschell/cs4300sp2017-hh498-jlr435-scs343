@@ -14,8 +14,8 @@ def index(request):
     ipt =''
     if request.GET.get('search'):
         search = request.GET.get('search')
-        ipt = search
-        output_list = find_similar(search)
+        ipt, output_list = find_similar(search)
+        print(ipt)
         paginator = Paginator(output_list, 10)
         page = request.GET.get('page')
         try:
