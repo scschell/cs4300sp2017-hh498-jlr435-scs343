@@ -64,11 +64,13 @@ def gen_average_author_vecs(author_to_titles, book_vectors, title_to_index):
         if average_vector.any() > 0:
             #store and norm
             author_vecs[i] = average_vector / (np.linalg.norm(average_vector))
-            #store index for later use
-            index_to_author[i] = author
-	    author_to_index[author] = i
-            i = i + 1
-	
+        else:
+            author_vecs[i] = average_vector 
+        #store index for later use
+        index_to_author[i] = author
+	author_to_index[author] = i
+        i = i + 1
+
     return author_to_index, index_to_author, author_vecs
 
 """
@@ -82,6 +84,9 @@ def remove_non_overlaps(title_to_authors, title_to_index):
     for title in title_to_authors:
         if title not in title_to_index:
             to_del.append(title)
+        else:
+            if title_to_index[title] < 1:
+                to_del.append(title)
     for item in to_del:
         del title_to_authors[item]
 
@@ -89,6 +94,9 @@ def remove_non_overlaps(title_to_authors, title_to_index):
     for title in title_to_index:
         if title not in title_to_authors:
             to_del2.append(title)
+        else:
+            if title_to_authors[title] < 1:
+                to_del2.append(title)
     for item in to_del2:
         del title_to_index[item]
 
