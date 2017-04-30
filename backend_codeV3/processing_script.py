@@ -139,6 +139,7 @@ def main():
 	print("BUILT BOOK SIMS")
 
 	print("MAKING PICKLES")
+        create_pickle(book_by_vocab, "book_vectors.pickle")
 	create_pickle(book_sims, "book_sims.pickle")
 	create_pickle(ratings, "ratings.pickle")
 	create_pickle(descriptions, "descriptions.pickle")
