@@ -5,19 +5,24 @@
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <style>
         body {
-            background-color: whitesmoke;
-            background: url('/static/img/library1.jpg') no-repeat center center fixed; 
+            background-image: url('/static/img/library1.jpg');
+            background-color: grey;
+            background-blend-mode: screen;
+            background-repeat: no-repeat;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
+
         }
+
         .btn {
             background-color: #B31B1B;
         }
 
         div {
-            color: #fff;
+            /* Makes the text be visible no matter what. */
+            color: whitesmoke;
             text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
         }
 
@@ -25,11 +30,11 @@
     </head>
     
     <body>
-        <!-- TODO: Please change lines 10 and 11 according to your actual project name and student names-->
+        <!-- TODO: Please change lines 10 and 11 according to your actual project name and student names
         <div class="topcorner">
             <p>Project Name: Book Recommendation System</p>
             <p>Student Name (NetID): hh498, jlr435, scs343</p>
-        </div>
+        </div>-->
         
         <form class="form-inline global-search" method='GET'>
             <h1 style="font-size: 55px; font-family:Garamond; color: #B31B1B">
