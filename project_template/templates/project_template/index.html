@@ -12,7 +12,7 @@
             $( "#input" ).autocomplete({
               source: {{books}}
             });
-          } );
+          });
         </script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <style>
@@ -49,8 +49,8 @@
             box-sizing: border-box;
             display: block;
             background-color:rgba(255, 255, 255, 0.75);
+            table-layout: fixed;
         }
-
         </style>
     </head>
     <body>
@@ -59,7 +59,6 @@
             <p>Project Name: Book Recommendation System</p>
             <p>Student Name (NetID): hh498, jlr435, scs343</p>
         </div>-->
-        
         <form class="form-inline global-search" method='GET'>
             <h1 style="font-size: 55px; font-family:'Old Standard TT', 'serif'; color: #B31B1B">
                 BookLife
@@ -75,23 +74,23 @@
  
         <div class="col-md-3"></div>
         <div class="form-inline global-search col-md-6">
-            <h4>Recommendations for: </h4>
             {% if input %}
+            <h4>Recommendations for: </h4>
                 {{input}}
-            {% endif %}(based on book descriptions)<br>
+            (based on book descriptions)<br>
+            {% endif %}
             <div id="table">
             <table border="0">
             <thead>
                 <th></th>
                 <th></th>
-                <!--<th>Sim</th>-->
                 <th></th>
             </thead>
             <tbody>
                 <tr>
                 {% for line in output %}
+                    <td><em>{{forloop.counter}}</em></td>
                     <td>{{ line.0 }}</td>
-                    <!--<td>{{ line.1 }}</td>-->
                     <td><b>{{ line.2 }}</b></td>
                 {% endfor %}
                 </tr>
@@ -103,12 +102,12 @@
                     {% if output.has_previous %}
                     <a href= "{{magic_url}}&page={{ output.previous_page_number }}">previous</a>
                     {% endif %}
-                    
+                    {% if output %}
                     <!-- Showing the page numbers in Html Page -->
                     <span class="current">
                     Page {{ output.number }} of {{ output.paginator.num_pages }}
                     </span>
-                    
+                    {% endif %}
                     {% if output.has_next %}
                     <a href= "{{magic_url}}&page={{ output.next_page_number }}">next</a>
                     {% endif %}

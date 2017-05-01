@@ -15,6 +15,7 @@ def index(request):
     output=''
     ipt =''
     books = return_titles(True)
+    ranking = []
     if request.GET.get('search'):
         search = request.GET.get('search')
         ipt, output_list = find_similar(search)
