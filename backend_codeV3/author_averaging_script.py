@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-""" Script by Sayge Schell <scs343@cornell.edu>
+""" Script by Sayge Schell <scs343@cornell.edu>.
+    Creates average author vectors for Rocchio method querying.
 """
 
 import cPickle as pickle
@@ -51,7 +52,6 @@ def gen_average_author_vecs(author_to_titles, book_vectors, title_to_index):
     i = 0
     #Compute for each author
     for author in author_to_titles:
-        
         #1/|titles written by author|
         vector = np.zeros(len(book_vectors[0]))
         denom = 1 / float(len(author_to_titles[author]))
@@ -61,11 +61,11 @@ def gen_average_author_vecs(author_to_titles, book_vectors, title_to_index):
             vector = vector + query
         #avg vector = 1/|books written by author| * sum(vectors of books written by author)
         average_vector = denom * vector
+        #store and norm
         if average_vector.any() > 0:
-            #store and norm
             author_vecs[i] = average_vector / (np.linalg.norm(average_vector))
         else:
-            author_vecs[i] = average_vector 
+            author_vecs[i] = average_vector
         #store index for later use
         index_to_author[i] = author
 	author_to_index[author] = i
@@ -111,8 +111,12 @@ def main():
     authors1 = load_pickle('data1_authors.pickle')
     authors2 = load_pickle('data2_authors.pickle')
     authors3 = load_pickle('data3_authors.pickle')
+    authors4 = load_pickle('data4_authors.pickle')
+    authors5 = load_pickle('data5_authors.pickle')
+    authors6 = load_pickle('data6_authors.pickle')
+    
     print("MERGING DATA")
-    title_to_authors = merge_dicts(authors1, authors2, authors3)
+    title_to_authors = merge_dicts(authors1, authors2, authors3, authors4, authors5, authors6)
 
     #generate dict of author : book titles
     print("GENERATING NEW DICTS")
@@ -123,6 +127,10 @@ def main():
     print("GENERATING AVERAGE VECTORS FOR EACH AUTHOR")
     author_to_index, index_to_author, author_vectors = gen_average_author_vecs(author_to_titles, book_vectors, title_to_index)
 
+    #test
+    print("COMPARING AUTHORS")
+    author_similarities = np.dot(author_vectors, author_vectors.T)
+    
     #save vectors
     print("SAVING PICKLES")
     create_pickle(title_to_authors, "title_to_authors.pickle")
@@ -130,5 +138,6 @@ def main():
     create_pickle(author_vectors, "author_vectors.pickle")
     create_pickle(author_to_index, "author_to_index.pickle")
     create_pickle(index_to_author, "index_to_author.pickle")
+    create_pickle(author_similarities, "author_similarities.pickle")
 
 main()

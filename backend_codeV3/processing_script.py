@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """ Contains back-end scripts needed for processing pickles.
 Author @ Jorge Rocha <jlr435@cornell.edu>
 Inspired from a script by @ Sayge Schell <scs343@cornell.edu>
@@ -122,10 +124,13 @@ def main():
 	data1 = load_pickle('data1.pickle')
 	data2 = load_pickle('data2.pickle')
 	data3 = load_pickle('data3.pickle')
+	data4 = load_pickle('data4.pickle')
+	data5 = load_pickle('data5.pickle')
+	data6 = load_pickle('data6.pickle')
 	print("LOADED DATA")
 
 	print("MERGING DATA")
-	data  = merge_dicts(data1, data2, data3)
+	data  = merge_dicts(data1, data2, data3, data4, data5, data6)
 	print("MERGED DATA")
 	descriptions, ratings, book_to_idx, idx_to_book = generate_dicts(data)
 	tokenized_descripts = clean_descripts(descriptions)
