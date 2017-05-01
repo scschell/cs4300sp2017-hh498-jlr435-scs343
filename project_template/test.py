@@ -18,6 +18,16 @@ def read_pickle(n):
 def query(q, data):
 	return difflib.get_close_matches(q, data, cutoff=0.35)[0]
 
+def return_titles(books=True):
+	titles = []
+	if (books):
+		title_to_idx = read_pickle('backend_codeV2/book_title_to_index.pickle')
+		for k, v in title_to_idx.items():
+			titles.append(k)
+
+	return titles
+
+
 def find_similar(q):
 	sims_m = read_pickle('backend_codeV2/book_sims.pickle')
 	title_to_idx = read_pickle('backend_codeV2/book_title_to_index.pickle')

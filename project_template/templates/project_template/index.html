@@ -2,6 +2,18 @@
     <head>
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+          $( function() {
+            $( "#input" ).autocomplete({
+              source: {{books}}
+            });
+          } );
+        </script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <style>
         body {
@@ -13,7 +25,6 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
-
         }
 
         .btn {
@@ -22,7 +33,7 @@
 
         div {
             color: #B31B1B;
-            font-family: Garamond;
+            font-family: 'Volkorn', 'serif';
             font-size: 18px;
         }
 
@@ -33,7 +44,7 @@
         .col-md-6 {
             position: relative;
             border-radius: 10px;
-            font-family: Garamond;
+            font-family: 'Volkorn', 'serif';
             font-size: 18px;
             box-sizing: border-box;
             display: block;
@@ -42,7 +53,6 @@
 
         </style>
     </head>
-    
     <body>
         <!-- TODO: Please change lines 10 and 11 according to your actual project name and student names
         <div class="topcorner">
@@ -51,7 +61,7 @@
         </div>-->
         
         <form class="form-inline global-search" method='GET'>
-            <h1 style="font-size: 55px; font-family:Garamond; color: #B31B1B">
+            <h1 style="font-size: 55px; font-family:'Old Standard TT', 'serif'; color: #B31B1B">
                 BookLife
             </h1>
             
@@ -62,20 +72,27 @@
             </div>
             <button type="submit" class="btn btn-info"> Search </button>
         </form>
+ 
         <div class="col-md-3"></div>
         <div class="form-inline global-search col-md-6">
             <h4>Recommendations for: </h4>
             {% if input %}
                 {{input}}
-            {% endif %}<b>(closest match)</b><br>
+            {% endif %}(based on book descriptions)<br>
             <div id="table">
-            <table border="1">
+            <table border="0">
+            <thead>
+                <th></th>
+                <th></th>
+                <!--<th>Sim</th>-->
+                <th></th>
+            </thead>
             <tbody>
                 <tr>
                 {% for line in output %}
                     <td>{{ line.0 }}</td>
-                    <td>{{ line.1 }}</td>
-                    <td>{{ line.2 }}</td>
+                    <!--<td>{{ line.1 }}</td>-->
+                    <td><b>{{ line.2 }}</b></td>
                 {% endfor %}
                 </tr>
             </tbody>
