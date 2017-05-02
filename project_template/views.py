@@ -15,10 +15,10 @@ def index(request):
     output=''
     ipt =''
     books = return_titles(True)
-    ranking = []
+    #authors = return_titles(False)
     if request.GET.get('search'):
         search = request.GET.get('search')
-        ipt, output_list = find_similar(search)
+        ipt, output_list = find_similar(search)#, True)
         paginator = Paginator(output_list, 10)
         page = request.GET.get('page')
         try:
@@ -32,4 +32,5 @@ def index(request):
                            'magic_url': request.get_full_path(),
                            'input': ipt,
                            'books': mark_safe(books)
+                           #'authors': mark_safe(authors)
                            })

@@ -24,16 +24,25 @@ def return_titles(books=True):
 		title_to_idx = read_pickle('backend_codeV2/book_title_to_index.pickle')
 		for k, v in title_to_idx.items():
 			titles.append(k)
-
+	"""else:
+		author_to_idx = read_pickle('backend_codeV3/author_to_index.pickle')
+		for k, v in author_to_idx.items():
+			titles.append(k)
+			"""
 	return titles
 
 
-def find_similar(q):
+def find_similar(q):#, books=True):
 	sims_m = read_pickle('backend_codeV2/book_sims.pickle')
 	title_to_idx = read_pickle('backend_codeV2/book_title_to_index.pickle')
 	idx_to_title = read_pickle('backend_codeV2/book_index_to_title.pickle')
 	ratings = read_pickle('backend_codeV2/ratings.pickle')
+	
+	#sims_a = read_pickle('backend_codeV3/author_similarities.pickle')
+	#author_to_idx = read_pickle('backend_codeV3/author_to_index.pickle')
+	#idx_to_authors = read_pickle('backend_codeV3/index_to_author.pickle')
 
+	#if (books):
 	lower_tti = {}
 	titles = []
 
@@ -42,8 +51,6 @@ def find_similar(q):
 		lower_tti[k] = v
 
 	q = query(q, titles)
-	print("+=================")
-	print(q)
 	q_idx = lower_tti[q]
 
 	sims_q = sims_m[q_idx]
@@ -56,3 +63,26 @@ def find_similar(q):
 		result.append((title, sim, float(ratings[title])))
 
 	return q, sorted(result, key=lambda tup: tup[1], reverse=True)
+"""
+	else:
+		lower_authors = {}
+		authors = []
+
+		for k, v in author_to_idx.items():
+			authors.append(k)
+			lower_authors[k] = v
+
+		q = query(q, authors)
+		q_idx = lower_authors(q)
+
+		sims_q = sims_a[q_idx]
+
+		resut = []
+
+		for idx in range(len(sims_a)):
+			sim = sims_q[idx]
+			authors = idx_to_authors[idx]
+			result.append((authors, sim))
+
+		return q, sorted(result, key=lambda tup: tup[1], reverse=True)
+"""

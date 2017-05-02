@@ -41,7 +41,7 @@
             color: #B31B1B;
         }
 
-        .col-md-6 {
+        .col-md-8 {
             position: relative;
             border-radius: 10px;
             font-family: 'Volkorn', 'serif';
@@ -72,31 +72,19 @@
             <button type="submit" class="btn btn-info"> Search </button>
         </form>
  
-        <div class="col-md-3"></div>
-        <div class="form-inline global-search col-md-6">
+        <div class="col-md-2"></div>
+        <div class="form-inline global-search col-md-8">
             {% if input %}
             <h4>Recommendations for: </h4>
                 {{input}}
-            (based on book descriptions)<br>
+            (based on GoodReads descriptions)<br>
             {% endif %}
-            <div id="table">
-            <table border="0">
-            <thead>
-                <th></th>
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr>
+            
                 {% for line in output %}
-                    <td><em>{{forloop.counter}}</em></td>
-                    <td>{{ line.0 }}</td>
-                    <td><b>{{ line.2 }}</b></td>
+                    <p>{{ line.0 }}</p>
+                    <p><b>{{ line.2 }}</b></p><br>
                 {% endfor %}
-                </tr>
-            </tbody>
-            </table>
-            </div>
+
             <div class="pagination">
                 <span class="step-links">
                     {% if output.has_previous %}
